@@ -1,115 +1,38 @@
+package views;
+
+import calcExceptions.CalculIncomplet;
+import entities.Calcul;
+import entities.Calculateur;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 180712 - Creation
+ * Classe vue pour la calculatrice
  */
 
 /**
  *
- * @author 1895248
+ * @author Pierre-Etienne Bouchard
  */
 public class Calculatrice extends javax.swing.JFrame {
 
+    
+    Calcul calcul = new Calcul();
+    Calculateur calculateur = new Calculateur();
+    
     /**
      * Creates new form Calculatrice
      */
     public Calculatrice() {
         initComponents();
+        textHistorique.setLineWrap(true);
+        textHistorique.setWrapStyleWord(true); 
     }
 
-    /**
-     * Ajoute l'operande si il y a 0 ou 1 operande
-     */
-    
-    public void ajouterOperande(String operande){
-        
-        //on doit avoir 0 ou 2 caracteres
-        int nbrOp = textOperation.getText().length();
-        
-        System.out.println("ajouterOperande, nbrOp = "+nbrOp);
-        
-        //cas ayant rien
-        if(nbrOp == 0){
-            
-            //on peut ajouter l'operande en parametre
-            textOperation.setText(operande);
-        }
-        
-        //cas ayant un operande et un operateur
-        if(nbrOp == 2){
-            
-            //On lit le contenu
-            String contenuActuel = textOperation.getText();
-            
-            //On met a jour le champ texte
-            textOperation.setText(contenuActuel+operande);
-        }
-    }
-    
-    /**
-     * Ajoute un operateur si il y a un operande
-     * @param operateur 
-     */
-    public void ajouterOperateur(String operateur){
-        
-        //prend le nombre de caractere
-        int nbrOp = textOperation.getText().length();
-        
-        System.out.println("ajouterOperateur, nbrOp = "+nbrOp);
-        
-        //On doit avoir un operande
-        if(nbrOp == 1){
-            
-            //on lit le contenu
-            String contenuActuel = textOperation.getText();
-            
-            //on peut ajouter l'operateur en parametre
-            textOperation.setText(contenuActuel + operateur);
-            
-            System.out.println("ajouterOperateur, textOperation = "+contenuActuel + operateur);
-        }
-    }
-    
-    /**
-     * Calcule le resultat
-     * @return Le resultat
-     */
-    public double calculer(){
-        double resultat = 0 ;
-        
-        //On lit l'operation a faire
-        String leCalculAFaire = textOperation.getText();
-        
-        //On lit l'operande de gauche
-        int op1 = Integer.parseInt(leCalculAFaire.substring(0, 1));
-        
-        //On lit l'operation a faire
-        String operateur = leCalculAFaire.substring(1, 2);
-        
-        //On associe l'operande de droite
-        int op2 = Integer.parseInt(leCalculAFaire.substring(2, 3));
-        
-        //On compare l'operation
-        if(operateur.equalsIgnoreCase("+")){
-            resultat = op1 + op2;
-        }
-        if(operateur.equalsIgnoreCase("-")){
-            resultat = op1 - op2;
-        }
-        if(operateur.equalsIgnoreCase("*")){
-            resultat = op1 * op2;
-        }
-        if(operateur.equalsIgnoreCase("/")){
-            try{
-                resultat = op1 / op2;
-            }catch(Exception e){
-                System.out.println("Petit snoro, va");
-            }
-            
-        }
-        
-        return resultat;
-    }
+       
+
+   
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,14 +57,17 @@ public class Calculatrice extends javax.swing.JFrame {
         bouton8 = new javax.swing.JButton();
         bouton9 = new javax.swing.JButton();
         bouton0 = new javax.swing.JButton();
-        textHistorique = new javax.swing.JTextField();
         textOperation = new javax.swing.JTextField();
         boutonAddition = new javax.swing.JButton();
         boutonSoustraction = new javax.swing.JButton();
         boutonMultiplication = new javax.swing.JButton();
         boutonDivision = new javax.swing.JButton();
         boutonCalculer = new javax.swing.JButton();
+        jButtonClear = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         labelHistorique = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textHistorique = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -266,98 +192,124 @@ public class Calculatrice extends javax.swing.JFrame {
             }
         });
 
-        labelHistorique.setText("Historique opérations");
+        jButtonClear.setText("C");
+        jButtonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(labelNomApplication)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bouton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bouton5))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bouton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bouton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bouton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(boutonSoustraction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bouton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(boutonAddition))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(bouton7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bouton8)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(bouton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bouton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(bouton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bouton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bouton9))
-                            .addComponent(bouton0)
-                            .addComponent(boutonCalculer))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(boutonDivision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(boutonMultiplication, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
-                    .addComponent(textOperation, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelHistorique)
-                    .addComponent(textHistorique, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bouton6, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                                    .addComponent(bouton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(boutonAddition, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                                    .addComponent(boutonSoustraction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(boutonMultiplication, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(2, 2, 2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bouton7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bouton0, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                                    .addComponent(bouton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(bouton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(boutonCalculer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addComponent(boutonDivision, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textOperation, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(labelNomApplication))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNomApplication)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelHistorique)))
+                .addComponent(labelNomApplication)
+                .addGap(18, 18, 18)
+                .addComponent(textOperation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bouton3)
+                    .addComponent(bouton1)
+                    .addComponent(bouton2)
+                    .addComponent(boutonAddition))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(textOperation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bouton3)
-                            .addComponent(bouton1)
-                            .addComponent(bouton2)
-                            .addComponent(boutonAddition))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bouton5)
-                            .addComponent(bouton4)
-                            .addComponent(bouton6)
-                            .addComponent(boutonSoustraction))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bouton7)
-                            .addComponent(bouton8)
-                            .addComponent(bouton9)
-                            .addComponent(boutonMultiplication))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bouton0)
-                            .addComponent(boutonDivision))
-                        .addGap(28, 28, 28)
-                        .addComponent(boutonCalculer)
-                        .addContainerGap(70, Short.MAX_VALUE))
-                    .addComponent(textHistorique)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bouton5)
+                    .addComponent(bouton4)
+                    .addComponent(bouton6)
+                    .addComponent(boutonSoustraction))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bouton7)
+                    .addComponent(bouton8)
+                    .addComponent(bouton9)
+                    .addComponent(boutonMultiplication))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bouton0)
+                    .addComponent(boutonDivision)
+                    .addComponent(boutonCalculer)
+                    .addComponent(jButtonClear))
+                .addContainerGap())
+        );
+
+        labelHistorique.setText("Historique");
+
+        textHistorique.setColumns(20);
+        textHistorique.setRows(5);
+        jScrollPane1.setViewportView(textHistorique);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(labelHistorique)
+                .addContainerGap(134, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelHistorique)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -365,96 +317,150 @@ public class Calculatrice extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton1ActionPerformed
-        ajouterOperande("1");
+        calcul.ajouterOperande("1");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton1ActionPerformed
 
     private void bouton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton2ActionPerformed
-        ajouterOperande("2");
-        
+        calcul.ajouterOperande("2");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton2ActionPerformed
 
     private void bouton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton3ActionPerformed
-        ajouterOperande("3");
+        calcul.ajouterOperande("3");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton3ActionPerformed
 
     private void bouton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton4ActionPerformed
-        ajouterOperande("4");
+        calcul.ajouterOperande("4");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton4ActionPerformed
 
     private void bouton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton5ActionPerformed
-        ajouterOperande("5");
+        calcul.ajouterOperande("5");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton5ActionPerformed
 
     private void bouton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton6ActionPerformed
-        ajouterOperande("6");
+        calcul.ajouterOperande("6");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton6ActionPerformed
 
     private void bouton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton7ActionPerformed
-        ajouterOperande("7");
+        calcul.ajouterOperande("7");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton7ActionPerformed
 
     private void bouton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton8ActionPerformed
-        ajouterOperande("8");
+        calcul.ajouterOperande("8");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton8ActionPerformed
 
     private void bouton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton9ActionPerformed
-        ajouterOperande("9");
+        calcul.ajouterOperande("9");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton9ActionPerformed
 
     private void bouton0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton0ActionPerformed
-        ajouterOperande("0");
+        calcul.ajouterOperande("0");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_bouton0ActionPerformed
 
     private void boutonAdditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonAdditionActionPerformed
-        ajouterOperateur("+");
+        calcul.ajouterOperateur("+");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_boutonAdditionActionPerformed
 
     private void boutonSoustractionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonSoustractionActionPerformed
-        ajouterOperateur("-");
+        calcul.ajouterOperateur("-");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_boutonSoustractionActionPerformed
 
     private void boutonMultiplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonMultiplicationActionPerformed
-        ajouterOperateur("*");
+        calcul.ajouterOperateur("*");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_boutonMultiplicationActionPerformed
 
     private void boutonDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonDivisionActionPerformed
-        ajouterOperateur("/");
+        calcul.ajouterOperateur("/");
+        textOperation.setText(calcul.affichage());
     }//GEN-LAST:event_boutonDivisionActionPerformed
 
+    /**
+     * Fait le calcul
+     * Efface l'affichage de l'operation
+     * Met a jour l'historique avec le dernier calcul
+     * @param evt 
+     */
     private void boutonCalculerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonCalculerActionPerformed
         
-        //lit historique
-        String historique = textHistorique.getText();
+        // calcul
         
-        //calcul nouvelle operation
-        String newCalcul = String.valueOf(calculer());
+        try{
+            
+            //test dabord si le calcul est complet
+            validerCalculComplet();
+            
+            calculateur.calculer(calcul);
+ 
+            //textHistorique.setText(calculateur.afficher());
+
+            // Efface operation
+
+            clear();
+
+            // Met a jour le calcul dans l'historique
+
+            String listeOperations = "";
+            String operation = "";
+
+            ArrayList<String> historique = calculateur.getHistorique();
+            for(int i=0; i<historique.size();i++){
+                listeOperations += historique.get(i) + "\n";
+                
+            }
+            textHistorique.setText(listeOperations);
+
+            System.out.println(listeOperations);
+
+         }catch(CalculIncomplet incomplet){
+            
+        }
         
-        //concatene historique (new line ne fonctionne pas)
-        //todo: fix this newline
-        textHistorique.setText(historique + '\n' + newCalcul);
-        
-        //reset champ calcul
-        textOperation.setText("");
     }//GEN-LAST:event_boutonCalculerActionPerformed
 
-    private void groupeBoutonOperandesActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        //obtenir une reference sur le bouton qui a ete enfonce
-        //lire son label
-        //mettre a jour le champ textOperation
+    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
+        
+        clear();
+    }//GEN-LAST:event_jButtonClearActionPerformed
+
+    private void clear(){
+        // efface les donnees
+        calcul.clear();
+        // affiche les pas de donnees
+        
+        textOperation.setText(calcul.affichage());
     }
+
     /**
      * @param args the command line arguments
      */
@@ -508,10 +514,23 @@ public class Calculatrice extends javax.swing.JFrame {
     private javax.swing.JButton boutonSoustraction;
     private javax.swing.ButtonGroup groupeBoutonOperandes;
     private javax.swing.ButtonGroup groupeBoutonOperations;
+    private javax.swing.JButton jButtonClear;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelHistorique;
     private javax.swing.JLabel labelNomApplication;
-    private javax.swing.JTextField textHistorique;
+    private javax.swing.JTextArea textHistorique;
     private javax.swing.JTextField textOperation;
     // End of variables declaration//GEN-END:variables
+
+
+private void validerCalculComplet()  throws CalculIncomplet{
+        
+         if( !calcul.hasOperandeGauche() 
+                || !calcul.hasOperandeDroit()
+                || !calcul.hasOperateur())
+             throw new CalculIncomplet();
+    }
+
 }
