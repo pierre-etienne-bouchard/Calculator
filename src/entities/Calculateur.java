@@ -86,7 +86,8 @@ public class Calculateur {
      */
     private void validerCalculEstValide(Calcul calcul)  throws CalculEstInvalide{
         
-         if( calcul.getOperandeDroit().equalsIgnoreCase("0"))
+         if( calcul.getOperateur().equalsIgnoreCase("\\")
+                 && calcul.getOperandeDroit().equalsIgnoreCase("0") )
              throw new CalculEstInvalide();
     }
 
